@@ -3,7 +3,7 @@
 // Delulu CLI — run the same checks as the website in CI.
 //   node cli/delulu.mjs app-release.aab [--out report-dir] [--json] [--fail-on blocker|high|medium|none]
 
-import { openAsBlob } from 'node:fs';
+import { openAsBlob, existsSync } from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { basename, join } from 'node:path';
 import { analyze } from '../src/analyzers/index.js';
@@ -36,7 +36,17 @@ const color = process.stdout.isTTY && !process.env.NO_COLOR;
 const c = (code, s) => (color ? `\x1b[${code}m${s}\x1b[0m` : s);
 const SEV = { blocker: (s) => c('41;97', ` ${s} `), high: (s) => c('31', s), medium: (s) => c('33', s), low: (s) => c('90', s), info: (s) => c('36', s) };
 
-const blob = await openAsBlob(file);
+if (!existsSync(file)) {
+  console.error(c('31', `✖ File not found: "${file}". Check the path to your .apk, .aab or .ipa and make sure it is built before this step.`));
+  process.exit(2);
+}
+let blob;
+try {
+  blob = await openAsBlob(file);
+} catch (e) {
+  console.error(c('31', `✖ Cannot read "${file}": ${e.message}`));
+  process.exit(2);
+}
 const named = Object.assign(blob, { name: basename(file) });
 let report;
 try {

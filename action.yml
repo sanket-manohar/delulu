@@ -41,6 +41,8 @@ runs:
         set +e
         node "$GITHUB_ACTION_PATH/cli/delulu.mjs" "$SR_FILE" --fail-on "$SR_FAIL_ON" --app-type "$SR_APP_TYPE" --out "$SR_OUT"
         code=$?
-        if [ -f "$SR_OUT/02-issues.md" ]; then cat "$SR_OUT/01-overview.md" "$SR_OUT/02-issues.md" >> "$GITHUB_STEP_SUMMARY"; fi
+        ov=$(ls "$SR_OUT"/*-overview.md 2>/dev/null | head -1)
+        is=$(ls "$SR_OUT"/*-issues.md 2>/dev/null | head -1)
+        if [ -n "$ov" ] && [ -n "$is" ]; then cat "$ov" "$is" >> "$GITHUB_STEP_SUMMARY"; fi
         echo "report=$SR_OUT/report.json" >> "$GITHUB_OUTPUT"
         exit $code
