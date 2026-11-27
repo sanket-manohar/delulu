@@ -1,0 +1,2 @@
+# Shows the "Sponsor" button on the GitHub repo. Run ./scripts/set-repo.sh <username> to fill this in.
+github: [YOUR_GITHUB_USERNAME]
