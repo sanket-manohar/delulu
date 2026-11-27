@@ -25,4 +25,31 @@ jobs:
           node --input-type=module -e "import {sampleApk,sampleIpa} from './src/core/samples.js'; import {writeFileSync} from 'node:fs'; writeFileSync('sample.apk', sampleApk()); writeFileSync('sample.ipa', sampleIpa());"
           node cli/delulu.mjs sample.apk --fail-on none --out out-apk
           node cli/delulu.mjs sample.ipa --fail-on none --out out-ipa
-          test -f out-apk/report.json && test -f out-ipa/02-issues.md
+          test -f out-apk/report.json
+          ls out-ipa/*-issues.md
+
+  action:
+    name: Self-test the GitHub Action
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build a sample APK
+        shell: bash
+        run: node --input-type=module -e "import {sampleApk} from './src/core/samples.js'; import {writeFileSync} from 'node:fs'; writeFileSync('sample.apk', sampleApk());"
+      - name: Run Delulu exactly like users do
+        id: delulu
+        uses: ./
+        with:
+          file: sample.apk
+          fail-on: none
+      - name: Check outputs
+        shell: bash
+        run: |
+          test -f "${{ steps.delulu.outputs.report }}"
+          ls delulu-report
