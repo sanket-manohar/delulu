@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: MIT
-// StoreReady CLI — run the same checks as the website in CI.
-//   node cli/storeready.mjs app-release.aab [--out report-dir] [--json] [--fail-on blocker|high|medium|none]
+// Delulu CLI — run the same checks as the website in CI.
+//   node cli/delulu.mjs app-release.aab [--out report-dir] [--json] [--fail-on blocker|high|medium|none]
 
 import { openAsBlob } from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -18,9 +18,10 @@ const flag = (name) => args.includes(`--${name}`);
 const file = args.find((a, i) => !a.startsWith('--') && !['--out', '--fail-on', '--app-type'].includes(args[i - 1]));
 
 if (!file || flag('help')) {
-  console.log(`StoreReady — Google Play & App Store pre-submission checks
+  console.log(`Delulu 🫠 — it's only delulu until it's approved
+Google Play & App Store pre-submission checks
 
-Usage: storeready <app.apk|app.aab|app.ipa> [options]
+Usage: delulu <app.apk|app.aab|app.ipa> [options]
 
 Options:
   --out <dir>          Write Markdown docs pack + report.json to <dir>
@@ -50,8 +51,8 @@ if (flag('json')) {
   process.stdout.write(JSON.stringify(report, null, 2) + '\n');
 } else {
   const s = report.summary;
-  console.log(`\n${c('1', 'StoreReady')} · ${report.app.name || ''} ${c('2', report.app.id)} ${report.app.versionName} (${report.app.versionCode})`);
-  console.log(`${report.platform === 'ios' ? 'iOS' : 'Android'} ${report.format.toUpperCase()} · ${report.framework.name} · score ${c('1', `${s.score}/100`)} (${s.grade}) — ${s.ready ? c('32', s.verdict) : c('31', s.verdict)}\n`);
+  console.log(`\n${c('1', 'Delulu')} · ${report.app.name || ''} ${c('2', report.app.id)} ${report.app.versionName} (${report.app.versionCode})`);
+  console.log(`${report.platform === 'ios' ? 'iOS' : 'Android'} ${report.format.toUpperCase()} · ${report.framework.name} · ${c('1', `${s.delulu}% delulu`)} (${s.vibe}) — ${s.ready ? c('32', s.verdict) : c('31', s.verdict)}\n`);
   for (const sev of SEVERITY_ORDER) {
     for (const i of report.issues.filter((x) => x.severity === sev)) {
       console.log(`${SEV[sev](sev.toUpperCase().padEnd(7))} ${i.title}${i.itms ? c('2', ` [${i.itms}]`) : ''}`);

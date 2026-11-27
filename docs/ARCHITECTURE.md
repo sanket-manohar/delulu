@@ -1,12 +1,12 @@
 # Architecture
 
-StoreReady is a static site plus a Node CLI that share one analysis engine. It has no build step and no runtime dependencies.
+Delulu is a static site plus a Node CLI that share one analysis engine. It has no build step and no runtime dependencies.
 
 ```
                 ┌──────────────── Browser (index.html) ────────────────┐
  APK/AAB/IPA ──▶│ src/ui/app.js ── analyze() ──▶ report ──▶ buildPages │──▶ Notion-style pages, exports
                 └──────────────────────────────────────────────────────┘
- APK/AAB/IPA ──▶  cli/storeready.mjs ── analyze() ──▶ report ──▶ Markdown docs, JSON, exit code
+ APK/AAB/IPA ──▶  cli/delulu.mjs ── analyze() ──▶ report ──▶ Markdown docs, JSON, exit code
 ```
 
 ## Layers

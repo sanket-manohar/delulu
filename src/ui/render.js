@@ -70,6 +70,10 @@ function renderBlock(b, ctx) {
     case 'timeline':
       return `<ol class="b-timeline">${b.items.map((t) => `<li class="tl ${esc(t.state)}"><span class="dot" aria-hidden="true"></span><div><div class="tl-head"><strong>${esc(t.title)}</strong><span class="tl-when">${esc(t.when)}</span>${t.state === 'current' ? '<span class="pill blue">You are here</span>' : ''}</div><p>${inline(t.text)}</p></div></li>`).join('')}</ol>`;
     case 'issue': return renderIssue(b.data, ctx);
+    case 'nextstep':
+      return `<div class="next-step tone-${esc(b.tone)}" id="next-step"><div class="ns-body"><div class="ns-title">${esc(b.title)}</div><div class="ns-text">${inline(b.text)}</div></div><a class="btn primary" href="${esc(b.action.href)}">${esc(b.action.label)} →</a></div>`;
+    case 'stepper':
+      return `<ol class="stepper" aria-label="Release progress">${b.steps.map((x, i) => `<li class="st ${esc(x.state)}"><span class="st-dot">${x.state === 'done' ? '✓' : i + 1}</span><span class="st-l">${esc(x.label)}</span></li>`).join('')}</ol>`;
     case 'apptype':
       return `<div class="picker"><span class="picker-label">App category</span><div class="chips">${Object.entries(APP_TYPES).map(([k, t]) => `<button type="button" class="chip ${ctx.appType === k ? 'active' : ''}" data-apptype="${k}">${t.icon} ${esc(t.label)}</button>`).join('')}</div></div>`;
     case 'fwpicker':
@@ -96,7 +100,7 @@ function renderIssue(i, ctx) {
 }
 
 // A fix step that looks like a shell command or code is shown as code.
-function fixLine(s) {
+export function fixLine(s) {
   if (/^(flutter|\.\/gradlew|cd |eas |npx |keytool|xcodebuild|grep|android\/|app\/|buildTypes|pubspec|ios\/|Xcode)/.test(s) && !/\s—\s/.test(s)) return `<code class="ic">${esc(s)}</code>`;
   return inline(s);
 }

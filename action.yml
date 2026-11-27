@@ -1,6 +1,6 @@
-name: StoreReady
+name: Delulu
 description: Check an APK, AAB or IPA against Google Play & App Store upload rules, OWASP MASVS security and privacy requirements.
-author: StoreReady contributors
+author: Delulu contributors
 branding:
   icon: check-circle
   color: green
@@ -19,7 +19,7 @@ inputs:
   out:
     description: Directory for the Markdown docs pack and report.json
     required: false
-    default: storeready-report
+    default: delulu-report
 outputs:
   report:
     description: Path to report.json
@@ -39,7 +39,7 @@ runs:
         SR_OUT: ${{ inputs.out }}
       run: |
         set +e
-        node "$GITHUB_ACTION_PATH/cli/storeready.mjs" "$SR_FILE" --fail-on "$SR_FAIL_ON" --app-type "$SR_APP_TYPE" --out "$SR_OUT"
+        node "$GITHUB_ACTION_PATH/cli/delulu.mjs" "$SR_FILE" --fail-on "$SR_FAIL_ON" --app-type "$SR_APP_TYPE" --out "$SR_OUT"
         code=$?
         if [ -f "$SR_OUT/02-issues.md" ]; then cat "$SR_OUT/01-overview.md" "$SR_OUT/02-issues.md" >> "$GITHUB_STEP_SUMMARY"; fi
         echo "report=$SR_OUT/report.json" >> "$GITHUB_OUTPUT"

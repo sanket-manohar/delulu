@@ -12,6 +12,9 @@ export const STATUS_ICON = { pass: '✅', fail: '❌', warn: '⚠️', info: '�
 /** Neutralise inline-markdown in values that come from the analyzed (untrusted) package. */
 export const u = (v) => String(v ?? '').replace(/[\\*`[\]]/g, (c) => `\\${c}`);
 
+/** Stable, Jira-style key for a check: AND-7 / IOS-12. */
+export const issueKey = (r, c) => `${r.platform === 'ios' ? 'IOS' : 'AND'}-${r.checks.indexOf(c) + 1}`;
+
 const plat = (r) => (r ? (r.platform === 'ios' ? 'App Store' : 'Google Play') : '');
 
 // ---------------------------------------------------------------- overview
@@ -19,8 +22,23 @@ function overviewPage(ctx) {
   const r = ctx.report;
   const s = r.summary;
   const blocks = [];
+  const nb = s.counts.blocker, nh = s.counts.high;
+  blocks.push({
+    type: 'nextstep',
+    tone: nb ? 'red' : nh ? 'orange' : 'green',
+    title: nb ? `Next step: fix ${nb} blocker${nb > 1 ? 's' : ''}` : nh ? `Next step: review ${nh} high-risk item${nh > 1 ? 's' : ''}` : 'Next step: set up your store listing',
+    text: nb ? `${plat(r)} will reject this build until these are fixed. Open the Board, start with the left column, and mark each card fixed as you go.` : nh ? 'No upload blockers. These items often cause human-review rejections or security incidents.' : `The build passes the automated checks. Follow the ${plat(r)} guide to create the listing and submit.`,
+    action: nb || nh ? { label: 'Open the Board', href: '#/board' } : { label: `Open the ${plat(r)} guide`, href: r.platform === 'ios' ? '#/appstore' : '#/play' },
+  });
+  blocks.push({ type: 'stepper', steps: [
+    { label: 'Analyze build', state: 'done' },
+    { label: 'Fix blockers', state: nb ? 'current' : 'done' },
+    { label: 'Store setup', state: nb ? 'todo' : 'current' },
+    { label: 'Test & submit', state: 'todo' },
+    { label: 'Live', state: 'todo' },
+  ] });
   blocks.push(stat([
-    { label: 'Readiness score', value: `${s.score}`, sub: `Grade ${s.grade}`, tone: s.ready ? (s.counts.high ? 'orange' : 'green') : 'red' },
+    { label: 'Delulu meter', value: `${s.delulu}%`, sub: s.vibe, tone: s.ready ? (s.counts.high ? 'orange' : 'green') : 'red' },
     { label: 'Blockers', value: s.counts.blocker, tone: s.counts.blocker ? 'red' : 'green' },
     { label: 'High risk', value: s.counts.high, tone: s.counts.high ? 'orange' : 'green' },
     { label: 'Checks passed', value: `${s.passed}/${s.applicable}` },
@@ -52,7 +70,7 @@ function overviewPage(ctx) {
     blocks.push(ul(top.map((i) => `${SEV_ICON[i.severity]} **${i.title}** — ${u(i.detail.split('. ')[0])}.`)));
   }
   blocks.push(h2('Your release workspace'));
-  blocks.push(p('Every page in the sidebar was generated from this build. Tick items as you go — progress is saved in this browser only. Export everything as Markdown, JSON or PDF from the top-right menu.'));
+  blocks.push(p('Every page was generated from this build. The **Delulu meter** shows how far it is from store-ready: 0% means it is actually ready, not just in your head. Nothing is stored on this site, so use **Download report** to keep your progress and reopen it later.'));
   blocks.push(table(['Document', 'What it covers'], [
     ['🚨 Issues', 'Every problem found, highlighted by severity with step-by-step fixes'],
     ['🧪 Store checks', `The automated checks ${plat(r)} runs on upload (${r.platform === 'ios' ? 'ITMS-9xxxx validation' : 'Play Console pre-review'})`],
@@ -466,9 +484,9 @@ function playGuidePage(ctx) {
   ]));
   blocks.push(step('signing', '6. Configure release signing, R8 and shrinking', [code(B.signing, 'Signing config')]));
   blocks.push(step('build', '7. Build the Android App Bundle', [code(B.build, 'Build'), p('Test the exact release artefact on a device before uploading:'), code(B.test, 'QA build')]));
-  blocks.push(step('selfcheck', '8. Run the StoreReady check on the AAB', [
+  blocks.push(step('selfcheck', '8. Run the Delulu check on the AAB', [
     ul(['Upload the .aab here — zero blockers is the goal.', 'Test on Android 16 and on the 16 KB page-size emulator image.', 'Check edge-to-edge layouts (enforced at API 36), predictive back, and large-screen layouts.']),
-    todo('play:t:selfcheck', 'StoreReady shows no blockers'),
+    todo('play:t:selfcheck', 'Delulu shows no blockers'),
   ]));
 
   blocks.push(h2('Phase 3 · Play Console setup'));
@@ -544,8 +562,8 @@ function appStoreGuidePage(ctx) {
 
   blocks.push(h2('Phase 3 · Build, check & upload'));
   blocks.push(step('build', '7. Archive the release build', [code(B.build, 'Build')]));
-  blocks.push(step('selfcheck', '8. Run the StoreReady check on the .ipa', [todo('ios:t:selfcheck', 'StoreReady shows no blockers')]));
-  blocks.push(step('upload', '9. Upload to App Store Connect', [code(B.upload, 'Upload'), p('Processing takes 5–30 minutes. Validation failures arrive by email with ITMS-9xxxx codes — each StoreReady check shows the matching code.')]));
+  blocks.push(step('selfcheck', '8. Run the Delulu check on the .ipa', [todo('ios:t:selfcheck', 'Delulu shows no blockers')]));
+  blocks.push(step('upload', '9. Upload to App Store Connect', [code(B.upload, 'Upload'), p('Processing takes 5–30 minutes. Validation failures arrive by email with ITMS-9xxxx codes — each Delulu check shows the matching code.')]));
 
   blocks.push(h2('Phase 4 · App Store Connect record'));
   blocks.push(step('record', '10. Create the app record', [ul(['Apps → **+** → New App: platform, name (≤ 30 chars, unique on the store), primary language, Bundle ID, SKU, user access.'])]));
@@ -594,7 +612,7 @@ function roadmapPage(ctx) {
   const st = (i) => (!r ? 'todo' : i < (blockers ? 1 : 2) ? 'done' : i === (blockers ? 1 : 2) ? 'current' : 'todo');
   blocks.push(timeline([
     { title: '1 · Accounts', when: 'Day 0–2', text: 'Google Play (US$25 once) and Apple Developer Program (US$99/yr). Organization accounts need a D-U-N-S number (can take 1–2 weeks to obtain).', state: st(0) },
-    { title: '2 · Fix blockers & harden', when: 'Day 1–5', text: 'Resolve StoreReady blockers, secrets, privacy manifest/purpose strings, target API, signing.', state: st(1) },
+    { title: '2 · Fix blockers & harden', when: 'Day 1–5', text: 'Resolve Delulu blockers, secrets, privacy manifest/purpose strings, target API, signing.', state: st(1) },
     { title: '3 · Store setup', when: 'Day 2–6', text: 'Listings, screenshots, privacy policy, Data safety / App Privacy, content rating, declarations.', state: st(2) },
     { title: '4 · Beta testing', when: 'Day 3–20', text: `Play internal → closed test (${POLICY.play.closedTestTesters} testers × ${POLICY.play.closedTestDays} days for new personal accounts). TestFlight internal/external.`, state: st(3) },
     { title: '5 · Review', when: '+1–7 days', text: 'Apple: usually 24–48 h. Google: hours to several days; longer for new accounts.', state: st(4) },
@@ -609,9 +627,9 @@ function policiesPage() {
   return [
     callout('📅', 'blue', `Rules last reviewed **${LAST_REVIEWED}**. Store policies change every year — the source file \`src/rules/policy.js\` is the single place to update, and pull requests are welcome.`),
     table(['Store', 'Requirement', 'Effective', 'Status', 'Source'], POLICY_TIMELINE.map((x) => [x.platform, x.rule, x.date, x.status, link('Official', x.url)])),
-    h2('What StoreReady cannot check'),
+    h2('What Delulu cannot check'),
     ul(['Human App Review judgement (design quality, spam, business model).', 'Server-side security: APIs, Firebase/Supabase rules, authorization logic.', 'Store-console-only data: listing text, screenshots, pricing, content rating answers.', 'Runtime behaviour: crashes, ANRs, network traffic — use the Play pre-launch report, TestFlight and a proxy such as mitmproxy.']),
-    quote('StoreReady is an independent open-source tool and is not affiliated with Google or Apple. Always confirm against the official policy pages.'),
+    quote('Delulu is an independent open-source tool and is not affiliated with Google or Apple. Always confirm against the official policy pages.'),
   ];
 }
 
@@ -621,7 +639,8 @@ export function buildPages(ctx) {
   const pages = [];
   if (r) {
     pages.push({ id: 'overview', section: 'This build', icon: '📊', title: `${r.app.name || r.app.id || r.fileName}`, subtitle: `${r.platform === 'ios' ? 'iOS' : 'Android'} release readiness report`, blocks: overviewPage(ctx) });
-    pages.push({ id: 'issues', section: 'This build', icon: '🚨', title: 'Issues', badge: r.issues.filter((i) => i.severity !== 'info').length, subtitle: 'Everything that can block your release, with fixes', blocks: issuesPage(ctx) });
+    pages.push({ id: 'board', section: 'This build', icon: '🗂️', title: 'Board', custom: 'board', badge: r.issues.filter((i) => i.severity !== 'info').length, subtitle: 'Every issue as a card — move it to Done when fixed', blocks: [table(['Key', 'Issue', 'Severity', 'Group'], r.issues.map((i) => [issueKey(r, i), i.title, SEVERITY_LABEL[i.severity], i.group]))] });
+    pages.push({ id: 'issues', section: 'This build', icon: '🚨', title: 'Issues', subtitle: 'Everything that can block your release, with fixes', blocks: issuesPage(ctx) });
     pages.push({ id: 'checks', section: 'This build', icon: '🧪', title: 'Store checks', subtitle: r.platform === 'ios' ? 'App Store Connect validation & review' : 'Play Console upload checks & policy', blocks: storeChecksPage(ctx) });
     pages.push({ id: 'security', section: 'This build', icon: '🔐', title: 'Security checklist', subtitle: 'OWASP MASVS v2', blocks: securityPage(ctx) });
     pages.push({ id: 'architecture', section: 'This build', icon: '🏗️', title: 'Architecture & structure', subtitle: 'What is inside your package', blocks: architecturePage(ctx) });

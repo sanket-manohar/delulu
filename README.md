@@ -1,24 +1,24 @@
 <div align="center">
 
-<img src="assets/img/logo.svg" width="72" alt="StoreReady logo">
+<img src="assets/img/logo.svg" width="72" alt="Delulu logo">
 
-# StoreReady
+# Delulu
 
 ### Will your app pass Google Play & App Store review? Find out *before* you upload.
 
-Drop an **APK, AAB or IPA**. StoreReady runs the checks **Play Console** and **App Store Connect** run on upload, plus OWASP security checks. You get every issue highlighted with a fix, plus Notion-style docs that walk you **step by step from build to live**.
+Drop an **APK, AAB or IPA**. Delulu runs the checks **Play Console** and **App Store Connect** run on upload, plus OWASP security checks. You get every issue highlighted with a fix, plus Notion-style docs that walk you **step by step from build to live**.
 
 **100% in your browser — your app is never uploaded anywhere.**
 
-[**🚀 Open StoreReady**](https://YOUR_GITHUB_USERNAME.github.io/storeready/) · [Try the sample APK](https://YOUR_GITHUB_USERNAME.github.io/storeready/) · [CLI & GitHub Action](#-cli--ci) · [What it checks](#-what-it-checks)
+[**🚀 Open Delulu**](https://YOUR_GITHUB_USERNAME.github.io/delulu/) · [Try the sample APK](https://YOUR_GITHUB_USERNAME.github.io/delulu/) · [CLI & GitHub Action](#-cli--ci) · [What it checks](#-what-it-checks)
 
-[![CI](https://github.com/YOUR_GITHUB_USERNAME/storeready/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_GITHUB_USERNAME/storeready/actions/workflows/ci.yml)
+[![CI](https://github.com/YOUR_GITHUB_USERNAME/delulu/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_GITHUB_USERNAME/delulu/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](LICENSE)
 ![Zero dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)
 ![Rules reviewed](https://img.shields.io/badge/store_rules-Nov_2026-blue)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-orange.svg)](CONTRIBUTING.md)
 
-<img src="docs/screenshots/overview.png" alt="StoreReady report for an Android build: readiness score, blockers and app identity" width="900">
+<img src="docs/screenshots/overview.png" alt="Delulu report for an Android build: readiness score, blockers and app identity" width="900">
 
 </div>
 
@@ -30,7 +30,7 @@ You finish the app, upload the build and wait. Then come the emails:
 
 > *ITMS-90683: Missing purpose string in Info.plist* · *Your app must target Android 16 (API level 36)* · *App must support 16 KB memory page sizes* · *ITMS-91053: Missing API declaration* · *Your app is signed with a debug certificate*…
 
-Each rejection costs a day or more. Each leaked API key costs money. StoreReady catches these problems **on your machine, in seconds**. It then hands you the exact fix for **your** framework and the full release checklist, so nothing is missed between "it builds" and "it's live".
+Each rejection costs a day or more. Each leaked API key costs money. Delulu catches these problems **on your machine, in seconds**. It then hands you the exact fix for **your** framework and the full release checklist, so nothing is missed between "it builds" and "it's live".
 
 ## ✨ Features
 
@@ -91,17 +91,17 @@ Secrets in DEX, JS bundles, Dart AOT snapshots, Mach-O binaries and config files
 
 **Frameworks detected:** Flutter · React Native (Hermes/JSC) · Expo · Native Kotlin/Java (+ Jetpack Compose) · Native Swift/Obj-C (+ SwiftUI) · Kotlin Multiplatform · Unity · Unreal · .NET MAUI/Xamarin · Capacitor · Cordova.
 
-> ⚠️ StoreReady is not affiliated with Google or Apple, and it can't predict human review. The **Store policy tracker** page lists every rule with its official source and the date it was last reviewed.
+> ⚠️ Delulu is not affiliated with Google or Apple, and it can't predict human review. The **Store policy tracker** page lists every rule with its official source and the date it was last reviewed.
 
 ## 🚀 Use it
 
-**Web:** open the [hosted site](https://YOUR_GITHUB_USERNAME.github.io/storeready/) and drop your build, or click **Try a sample** to see a full report in seconds.
+**Web:** open the [hosted site](https://YOUR_GITHUB_USERNAME.github.io/delulu/) and drop your build, or click **Try a sample** to see a full report in seconds.
 
 **Run locally** (no install, no build step):
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/storeready.git
-cd storeready
+git clone https://github.com/YOUR_GITHUB_USERNAME/delulu.git
+cd delulu
 python3 -m http.server 8080   # or: npx serve .
 # open http://localhost:8080
 ```
@@ -111,28 +111,28 @@ python3 -m http.server 8080   # or: npx serve .
 Node 20+, zero dependencies:
 
 ```bash
-node cli/storeready.mjs app-release.aab                 # pretty report, exit 1 on blockers
-node cli/storeready.mjs App.ipa --out storeready-docs   # + Markdown docs pack & report.json
-node cli/storeready.mjs app.apk --json --fail-on high   # JSON, fail on high or worse
+node cli/delulu.mjs app-release.aab                 # pretty report, exit 1 on blockers
+node cli/delulu.mjs App.ipa --out delulu-docs   # + Markdown docs pack & report.json
+node cli/delulu.mjs app.apk --json --fail-on high   # JSON, fail on high or worse
 ```
 
 **GitHub Action:** gate every release build.
 
 ```yaml
-- uses: YOUR_GITHUB_USERNAME/storeready@v1
+- uses: YOUR_GITHUB_USERNAME/delulu@v1
   with:
     file: build/app/outputs/bundle/release/app-release.aab
     fail-on: blocker        # blocker | high | medium | low | none
     app-type: finance       # adds category-specific compliance items to the docs
 ```
 
-The issues list is added to the job summary, and the full docs pack is written to `storeready-report/`.
+The issues list is added to the job summary, and the full docs pack is written to `delulu-report/`.
 
 **Show your score:** after analyzing, choose *Share → Copy README badge*:
 
-![StoreReady Google Play](https://img.shields.io/badge/StoreReady_Google_Play-96%2F100-brightgreen)
+![Delulu Google Play](https://img.shields.io/badge/Delulu_Google_Play-96%2F100-brightgreen)
 
-## 🔒 Privacy & security of StoreReady itself
+## 🔒 Privacy & security of Delulu itself
 
 - Files are read with the browser's `Blob` + `DecompressionStream` APIs. Nothing is uploaded, and there is no backend, analytics, cookies or third-party script.
 - A strict **Content-Security-Policy** (`default-src 'self'`) blocks all network requests from the page.
@@ -148,7 +148,7 @@ index.html ─ src/ui/app.js (Notion-style workspace, router, exports)
               ├─ src/core/        zip · axml · protoxml (AAB) · plist (xml+binary) · binary (ELF/Mach-O) · scanner
               ├─ src/rules/       policy.js (dated store rules) · signatures.js (SDKs, permissions, APIs)
               └─ src/report/      pages.js (block model) · markdown.js · frameworks.js (commands)
-cli/storeready.mjs ─ same analyzers in Node
+cli/delulu.mjs ─ same analyzers in Node
 ```
 
 Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/ADDING_RULES.md](docs/ADDING_RULES.md).
@@ -167,6 +167,6 @@ npm test   # 18 tests, node:test, no dependencies
 
 <div align="center">
 
-**If StoreReady saved you a rejection, give it a ⭐ so other developers find it.**
+**If Delulu saved you a rejection, give it a ⭐ so other developers find it.**
 
 </div>

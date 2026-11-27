@@ -1,7 +1,7 @@
 node_modules/
 .DS_Store
 *.log
-storeready-report/
+delulu-report/
 # Never commit real builds or signing material
 *.apk
 *.aab

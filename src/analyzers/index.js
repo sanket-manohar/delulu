@@ -24,7 +24,7 @@ export async function analyze(file, opts = {}) {
   } else throw new Error(`Unrecognised package. Upload one of: ${SUPPORTED}. (Split APKs / .apks / .xapk: extract and upload base.apk.)`);
   report.summary = summarize(report);
   report.analyzedAt = new Date().toISOString();
-  report.tool = { name: 'StoreReady', version: '1.0.0' };
+  report.tool = { name: 'Delulu', version: '1.0.0' };
   return report;
 }
 
@@ -37,7 +37,10 @@ export function summarize(report) {
   let score = 100 - counts.blocker * 18 - counts.high * 8 - counts.medium * 3 - counts.low * 1;
   if (counts.blocker) score = Math.min(score, 49);
   score = Math.max(0, Math.round(score));
-  const verdict = counts.blocker ? 'Not ready — fix blockers before submitting' : counts.high ? 'Almost ready — fix high-risk items' : 'Ready for submission';
+  const verdict = counts.blocker ? 'Delulu — the store will reject this build' : counts.high ? 'Almost there — fix the high-risk items' : 'Not delulu — store-ready ✨';
+  // Delulu meter: how far the build is from store-ready (0% = ready). Blockers always keep it above 50%.
+  const delulu = 100 - score;
+  const vibe = delulu === 0 ? 'ate, no crumbs 💅' : delulu <= 15 ? 'lowkey ready' : delulu <= 50 ? 'kinda delulu' : delulu <= 80 ? 'very delulu 🫠' : 'fully delulu 💀';
   const grade = score >= 90 ? 'A' : score >= 75 ? 'B' : score >= 60 ? 'C' : score >= 40 ? 'D' : 'F';
-  return { counts, passed, applicable, score, grade, verdict, ready: !counts.blocker };
+  return { counts, passed, applicable, score, grade, verdict, delulu, vibe, ready: !counts.blocker };
 }

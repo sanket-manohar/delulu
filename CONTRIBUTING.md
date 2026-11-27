@@ -1,4 +1,4 @@
-# Contributing to StoreReady
+# Contributing to Delulu
 
 Thanks for helping developers ship without rejections! 🎉
 
@@ -14,7 +14,7 @@ Thanks for helping developers ship without rejections! 🎉
 ```bash
 python3 -m http.server 8080   # then open http://localhost:8080
 npm test                      # node:test — must pass before a PR
-node cli/storeready.mjs path/to/app.aab
+node cli/delulu.mjs path/to/app.aab
 ```
 
 ## Most-wanted contributions
