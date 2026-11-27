@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20, 22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm test
+      - name: CLI smoke test on generated samples
+        run: |
+          node --input-type=module -e "import {sampleApk,sampleIpa} from './src/core/samples.js'; import {writeFileSync} from 'node:fs'; writeFileSync('sample.apk', sampleApk()); writeFileSync('sample.ipa', sampleIpa());"
+          node cli/storeready.mjs sample.apk --fail-on none --out out-apk
+          node cli/storeready.mjs sample.ipa --fail-on none --out out-ipa
+          test -f out-apk/report.json && test -f out-ipa/02-issues.md

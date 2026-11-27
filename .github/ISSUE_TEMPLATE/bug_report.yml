@@ -1,0 +1,28 @@
+name: 🐞 Bug report
+description: Wrong result, crash or UI problem
+labels:
+- bug
+body:
+- type: markdown
+  attributes:
+    value: ⚠️ Never attach a real APK/AAB/IPA or paste secrets. Describe the structure instead (framework, versions, relevant manifest/Info.plist keys).
+- type: textarea
+  id: what
+  attributes:
+    label: What happened?
+    description: Include the check id (e.g. play.16kb) if relevant
+  validations:
+    required: true
+- type: textarea
+  id: expected
+  attributes:
+    label: What did you expect?
+- type: input
+  id: env
+  attributes:
+    label: Framework & versions
+    placeholder: Flutter 3.35, AGP 8.9, target 36 / Xcode 26.1
+- type: input
+  id: browser
+  attributes:
+    label: Browser / OS or CLI Node version

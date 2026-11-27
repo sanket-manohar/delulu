@@ -1,0 +1,46 @@
+name: StoreReady
+description: Check an APK, AAB or IPA against Google Play & App Store upload rules, OWASP MASVS security and privacy requirements.
+author: StoreReady contributors
+branding:
+  icon: check-circle
+  color: green
+inputs:
+  file:
+    description: Path to the .apk, .aab or .ipa to analyze
+    required: true
+  fail-on:
+    description: Fail the job when an issue at or above this severity exists (blocker, high, medium, low, none)
+    required: false
+    default: blocker
+  app-type:
+    description: App category for compliance docs (general, kids, health, finance, games, social, dating, vpn, crypto, news, education, webview, enterprise)
+    required: false
+    default: general
+  out:
+    description: Directory for the Markdown docs pack and report.json
+    required: false
+    default: storeready-report
+outputs:
+  report:
+    description: Path to report.json
+    value: ${{ steps.run.outputs.report }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+    - id: run
+      shell: bash
+      env:
+        SR_FILE: ${{ inputs.file }}
+        SR_FAIL_ON: ${{ inputs.fail-on }}
+        SR_APP_TYPE: ${{ inputs.app-type }}
+        SR_OUT: ${{ inputs.out }}
+      run: |
+        set +e
+        node "$GITHUB_ACTION_PATH/cli/storeready.mjs" "$SR_FILE" --fail-on "$SR_FAIL_ON" --app-type "$SR_APP_TYPE" --out "$SR_OUT"
+        code=$?
+        if [ -f "$SR_OUT/02-issues.md" ]; then cat "$SR_OUT/01-overview.md" "$SR_OUT/02-issues.md" >> "$GITHUB_STEP_SUMMARY"; fi
+        echo "report=$SR_OUT/report.json" >> "$GITHUB_OUTPUT"
+        exit $code

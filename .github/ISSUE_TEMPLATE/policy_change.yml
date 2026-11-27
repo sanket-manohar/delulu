@@ -1,0 +1,34 @@
+name: 📜 Store policy changed
+description: Google or Apple announced a new requirement that StoreReady should check
+labels:
+- rules
+body:
+- type: dropdown
+  id: store
+  attributes:
+    label: Store
+    options:
+    - Google Play
+    - App Store
+    - Both
+    - Android (all stores)
+  validations:
+    required: true
+- type: textarea
+  id: rule
+  attributes:
+    label: The new requirement
+    description: What changes and from which date?
+  validations:
+    required: true
+- type: input
+  id: source
+  attributes:
+    label: Official source URL
+  validations:
+    required: true
+- type: textarea
+  id: detect
+  attributes:
+    label: How could it be detected from a build?
+    description: Manifest attribute, Info.plist key, binary symbol, file path…

@@ -1,0 +1,12 @@
+name: ✨ Feature request
+description: New check, SDK fingerprint, framework guide or UI idea
+labels:
+- enhancement
+body:
+- type: textarea
+  id: idea
+  attributes:
+    label: What would you like?
+    description: Link the rejection email, ITMS code or policy if this is about a store check.
+  validations:
+    required: true

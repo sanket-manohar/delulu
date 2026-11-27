@@ -1,0 +1,16 @@
+{
+  "name": "storeready",
+  "version": "1.0.0",
+  "description": "Will your app pass Google Play & App Store review? Pre-submission checks for APK, AAB and IPA — store upload validation, OWASP MASVS security, privacy drafts and step-by-step release guides. Runs 100% in the browser.",
+  "type": "module",
+  "license": "MIT",
+  "bin": { "storeready": "cli/storeready.mjs" },
+  "files": ["cli", "src", "README.md", "LICENSE"],
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "python3 -m http.server 8080 || npx --yes serve -l 8080 .",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --test tests/*.test.mjs && node cli/storeready.mjs --help > /dev/null"
+  },
+  "keywords": ["android", "ios", "apk", "aab", "ipa", "google-play", "app-store", "app-review", "flutter", "react-native", "expo", "security", "owasp", "masvs", "privacy-manifest", "release", "mobile"]
+}

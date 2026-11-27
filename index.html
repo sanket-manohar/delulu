@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>StoreReady — Will your app pass Google Play &amp; App Store review?</title>
+  <meta name="description" content="Free, open-source pre-submission checks for APK, AAB and IPA. The same checks Google Play Console and App Store Connect run, OWASP MASVS security, privacy drafts and step-by-step release guides. Runs 100% in your browser.">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="StoreReady — Will your app pass store review?">
+  <meta property="og:description" content="Drop an APK, AAB or IPA. Get the checks Play Console & App Store Connect run, security issues, fixes and every step to go live. 100% in-browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <a class="skip" href="#page">Skip to content</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar" aria-label="Workspace navigation">
+      <div class="ws">
+        <img src="assets/img/logo.svg" alt="" width="22" height="22">
+        <span class="ws-name">StoreReady</span>
+        <span class="ws-ver" id="version"></span>
+        <button class="icon-btn collapse" type="button" data-action="collapse" aria-label="Collapse sidebar" title="Collapse sidebar">«</button>
+      </div>
+      <button class="side-btn" type="button" data-action="search"><span>🔍</span><span>Search</span><kbd>Ctrl K</kbd></button>
+      <button class="side-btn" type="button" data-action="new"><span>➕</span><span>New analysis</span></button>
+      <a class="nav-item" href="#/" data-nav-home data-nav="home"><span class="ni">🏠</span><span class="nt">Home</span></a>
+      <nav id="nav"></nav>
+      <div class="side-foot">
+        <a class="side-link" data-repo href="#" target="_blank" rel="noopener noreferrer">⭐ Star on GitHub</a>
+        <span class="muted small">Your files never leave this device.</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn mobile-only" type="button" data-action="menu" aria-label="Open navigation">☰</button>
+        <button class="icon-btn expand" type="button" data-action="collapse" aria-label="Expand sidebar" title="Expand sidebar">»</button>
+        <div class="crumbs" id="crumbs"></div>
+        <div class="top-actions">
+          <div class="menu">
+            <button class="btn-ghost" type="button" data-action="share-menu" aria-haspopup="true">Share</button>
+            <div class="menu-pop" role="menu">
+              <button type="button" role="menuitem" data-action="copy-summary">📣 Copy shareable summary</button>
+              <button type="button" role="menuitem" data-action="copy-badge">🏷️ Copy README badge</button>
+            </div>
+          </div>
+          <div class="menu">
+            <button class="btn-ghost" type="button" data-action="export-menu" aria-haspopup="true">Export</button>
+            <div class="menu-pop" role="menu">
+              <button type="button" role="menuitem" data-action="export-zip">🗂️ Docs pack (.zip of Markdown)</button>
+              <button type="button" role="menuitem" data-action="export-md">📝 Single Markdown file</button>
+              <button type="button" role="menuitem" data-action="print">🖨️ PDF (print all pages)</button>
+              <button type="button" role="menuitem" data-action="export-json">🧬 Raw report (.json)</button>
+            </div>
+          </div>
+          <button class="icon-btn" type="button" data-action="theme" aria-label="Toggle dark mode">🌙</button>
+        </div>
+      </header>
+      <div class="scroller" id="scroller">
+        <article class="page" id="page" tabindex="-1"></article>
+      </div>
+    </main>
+  </div>
+
+  <div class="overlay" id="progress" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="progress-title">
+      <div class="spinner" aria-hidden="true"></div>
+      <div id="progress-title" class="modal-title">Analyzing your build</div>
+      <div class="muted small" id="progress-file"></div>
+      <div class="pbar"><div class="pbar-fill" id="progress-bar"></div></div>
+      <div class="muted small" id="progress-msg" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div class="overlay palette" id="palette" hidden>
+    <div class="pal" role="dialog" aria-modal="true" aria-label="Search">
+      <input id="palette-input" type="search" placeholder="Search pages, checks and steps…" autocomplete="off">
+      <div id="palette-list" class="pal-list"></div>
+    </div>
+  </div>
+
+  <div class="drag-veil" aria-hidden="true"><div>📦 Drop your APK, AAB or IPA</div></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <input type="file" id="file" accept=".apk,.aab,.ipa,application/vnd.android.package-archive,application/octet-stream" hidden>
+  <div id="print-root"></div>
+  <noscript><p class="noscript">StoreReady needs JavaScript to analyze files locally in your browser.</p></noscript>
+  <script type="module" src="src/ui/app.js"></script>
+</body>
+</html>
