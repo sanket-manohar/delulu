@@ -10,13 +10,14 @@ Drop an **APK, AAB or IPA**. Delulu runs the checks **Play Console** and **App S
 
 **100% in your browser — your app is never uploaded anywhere.**
 
-[**✈️ Open Delulu**](https://YOUR_GITHUB_USERNAME.github.io/delulu/) · [Try the sample APK](https://YOUR_GITHUB_USERNAME.github.io/delulu/) · [CLI & GitHub Action](#-cli--ci) · [What it checks](#-what-it-checks)
+[**✈️ Open Delulu**](https://sanket-manohar.github.io/delulu/) · [Try the sample APK](https://sanket-manohar.github.io/delulu/) · [CLI & GitHub Action](#-cli--ci) · [What it checks](#-what-it-checks)
 
-[![CI](https://github.com/YOUR_GITHUB_USERNAME/delulu/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_GITHUB_USERNAME/delulu/actions/workflows/ci.yml)
+[![CI](https://github.com/sanket-manohar/delulu/actions/workflows/ci.yml/badge.svg)](https://github.com/sanket-manohar/delulu/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](LICENSE)
 ![Zero dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)
 ![Rules reviewed](https://img.shields.io/badge/store_rules-Nov_2026-blue)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-orange.svg)](CONTRIBUTING.md)
+[![Sponsor](https://img.shields.io/badge/Sponsor-%F0%9F%92%96-ea4aaa)](https://github.com/sponsors/sanket-manohar)
 
 <img src="docs/screenshots/overview.png" alt="Delulu report for an Android build: readiness score, blockers and app identity" width="900">
 
@@ -102,12 +103,12 @@ Secrets in DEX, JS bundles, Dart AOT snapshots, Mach-O binaries and config files
 
 ## 🚀 Use it
 
-**Web:** open the [hosted site](https://YOUR_GITHUB_USERNAME.github.io/delulu/) and drop your build, or click **Try a sample** to see a full report in seconds.
+**Web:** open the [hosted site](https://sanket-manohar.github.io/delulu/) and drop your build, or click **Try a sample** to see a full report in seconds.
 
 **Run locally** (no install, no build step):
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/delulu.git
+git clone https://github.com/sanket-manohar/delulu.git
 cd delulu
 python3 -m http.server 8080   # or: npx serve .
 # open http://localhost:8080
@@ -126,7 +127,7 @@ node cli/delulu.mjs app.apk --json --fail-on high   # JSON, fail on high or wors
 **GitHub Action:** gate every release build.
 
 ```yaml
-- uses: YOUR_GITHUB_USERNAME/delulu@v1
+- uses: sanket-manohar/delulu@v1
   with:
     file: build/app/outputs/bundle/release/app-release.aab
     fail-on: blocker        # blocker | high | medium | low | none
@@ -158,7 +159,7 @@ index.html ─ src/ui/app.js (Notion-style workspace, router, exports)
 cli/delulu.mjs ─ same analyzers in Node
 ```
 
-Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/ADDING_RULES.md](docs/ADDING_RULES.md).
+Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/ADDING_RULES.md](docs/ADDING_RULES.md) and [docs/RELEASE.md](docs/RELEASE.md).
 
 ## ☕ Donations
 
@@ -166,13 +167,13 @@ The site has a **Buy the dev a coffee** popup (preset ₹/$ amounts or any custo
 
 ```js
 export const DONATE = {
-  url: 'https://razorpay.me/@yourname?amount={amount}', // or Buy Me a Coffee, GitHub Sponsors, a UPI link…
+  url: 'https://github.com/sponsors/sanket-manohar', // or a Razorpay page / UPI link with {amount}
   defaultCurrency: 'INR',
   presets: { INR: [49, 99, 199, 499], USD: [2, 5, 10, 25] },
 };
 ```
 
-Until `url` is set, the button thanks the user and says donations open soon. The popup opens automatically at most once a week, after a report is downloaded or a minute into a report.
+The official build points to [GitHub Sponsors](https://github.com/sponsors/sanket-manohar). If `url` is empty, the button thanks the user and says donations open soon. The popup opens automatically at most once a week, after a report is downloaded or a minute into a report.
 
 ## 🤝 Contributing
 
@@ -181,6 +182,12 @@ Store rules change every year: Google updates its target API rule each August, a
 ```bash
 npm test   # 18 tests, node:test, no dependencies
 ```
+
+## 👋 Creator
+
+Built by **Sanket Manohar**: [sanketmanohar.com](https://sanketmanohar.com) · [YouTube](https://www.youtube.com/@sanketmanoharstudio) · [GitHub](https://github.com/sanket-manohar)
+
+If Delulu helped you, you can [sponsor the project on GitHub](https://github.com/sponsors/sanket-manohar) 💛
 
 ## 📄 License
 

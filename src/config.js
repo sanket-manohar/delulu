@@ -1,8 +1,16 @@
 // SPDX-License-Identifier: MIT
-// Change REPO_URL after you fork/publish so share links and badges point to your repository.
-export const REPO_URL = 'https://github.com/YOUR_GITHUB_USERNAME/delulu';
-export const SITE_URL = 'https://YOUR_GITHUB_USERNAME.github.io/delulu/';
+// Project & creator links.
+export const REPO_URL = 'https://github.com/sanket-manohar/delulu';
+export const SITE_URL = 'https://sanket-manohar.github.io/delulu/';
 export const VERSION = '1.0.0';
+
+export const AUTHOR = {
+  name: 'Sanket Manohar',
+  website: 'https://sanketmanohar.com',
+  youtube: 'https://www.youtube.com/@sanketmanoharstudio',
+  github: 'https://github.com/sanket-manohar',
+  sponsors: 'https://github.com/sponsors/sanket-manohar',
+};
 
 // "Buy the dev a coffee" — set DONATE.url later. Placeholders: {amount}, {currency}.
 // Examples:
@@ -11,7 +19,7 @@ export const VERSION = '1.0.0';
 //   'upi://pay?pa=yourname@okaxis&pn=Delulu&am={amount}&cu=INR'
 //   'https://github.com/sponsors/yourname'
 export const DONATE = {
-  url: '',
+  url: 'https://github.com/sponsors/sanket-manohar',
   defaultCurrency: 'INR',
   presets: { INR: [49, 99, 199, 499], USD: [2, 5, 10, 25] },
 };

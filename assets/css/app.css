@@ -639,3 +639,14 @@ details[open] > summary .tri::before { transform: rotate(90deg); }
 @media print { .star-repo, .star-side { display: none !important; } }
 .side-foot { position: sticky; bottom: -10px; background: var(--side); padding: 10px 0 10px; margin-bottom: -10px; box-shadow: 0 -10px 12px -8px var(--side); z-index: 2; }
 .dl-btn.pending::after { top: -3px; right: -3px; }
+
+/* ---------------- creator ---------------- */
+.creator { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; margin: 24px 0 10px; }
+.creator-av { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; color: #fff; background: linear-gradient(135deg, #3B82F6, #22C55E 50%, #F59E0B); flex: 0 0 44px; }
+.creator-body { flex: 1; min-width: 200px; }
+.creator-name { font-weight: 700; }
+.creator-links { display: flex; gap: 6px; flex-wrap: wrap; }
+.made-by a { color: var(--text-2); text-decoration: underline; text-decoration-color: var(--border-2); }
+.made-by a:hover { color: var(--text); }
+.sponsor-link { font-size: 14px; font-weight: 600; color: var(--blue-tx); text-decoration: none; }
+.sponsor-link:hover { text-decoration: underline; }

@@ -39,5 +39,15 @@
     "privacy-manifest",
     "release",
     "mobile"
-  ]
+  ],
+  "author": "Sanket Manohar (https://sanketmanohar.com)",
+  "homepage": "https://sanket-manohar.github.io/delulu/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanket-manohar/delulu.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sanket-manohar/delulu/issues"
+  },
+  "funding": "https://github.com/sponsors/sanket-manohar"
 }

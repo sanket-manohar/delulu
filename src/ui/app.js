@@ -12,7 +12,7 @@ import { renderBlocks, esc, inline } from './render.js';
 import { renderBoard, renderDrawer } from './board.js';
 import { icon, cicon } from './icons.js';
 import { Tour } from './tour.js';
-import { REPO_URL, SITE_URL, VERSION, DONATE } from '../config.js';
+import { REPO_URL, SITE_URL, VERSION, DONATE, AUTHOR } from '../config.js';
 import { LAST_REVIEWED } from '../rules/policy.js';
 
 const $ = (s, el = document) => el.querySelector(s);
@@ -251,6 +251,17 @@ function renderHome() {
     <h2 class="b-h2">Playbooks — no upload needed</h2>
     <div class="link-list">
       ${S.pages.filter((p) => !BUILD_TABS.includes(p.id) || !S.report).filter((p) => !BUILD_TABS.includes(p.id)).map((p) => `<a class="link-row" href="#/${p.id}">${cicon(PAGE_ICON[p.id] || 'doc')}<span>${esc(p.title)}</span><span class="muted">${esc(p.subtitle || '')}</span></a>`).join('')}
+    </div>
+
+    <div class="creator">
+      <div class="creator-av" aria-hidden="true">SM</div>
+      <div class="creator-body"><div class="creator-name">Built by ${esc(AUTHOR.name)}</div><div class="muted small">Indian developer making free, open-source tools. Follow along for build videos and tutorials.</div></div>
+      <div class="creator-links">
+        <a class="btn sm primary" href="${esc(AUTHOR.sponsors)}" target="_blank" rel="noopener noreferrer">💖 Sponsor</a>
+        <a class="btn sm" href="${esc(AUTHOR.youtube)}" target="_blank" rel="noopener noreferrer">▶️ YouTube</a>
+        <a class="btn sm" href="${esc(AUTHOR.github)}" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="btn sm" href="${esc(AUTHOR.website)}" target="_blank" rel="noopener noreferrer">Website</a>
+      </div>
     </div>
 
     <div class="b-callout tone-gray"><span class="b-callout-icon">📅</span><div>Rules last reviewed <strong>${LAST_REVIEWED}</strong>. Open source — <a href="${esc(REPO_URL)}" target="_blank" rel="noopener noreferrer">star or contribute on GitHub</a>. New here? <a href="#" data-action="tour">Take the 1-minute tour</a>.</div></div>`;
