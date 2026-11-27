@@ -1,16 +1,16 @@
 <div align="center">
 
-<img src="assets/img/logo.svg" width="72" alt="Delulu logo">
+<img src="assets/img/wordmark.svg" width="280" alt="delulu">
 
-# Delulu
+### it's only delulu until it's approved ✈️
 
-### Will your app pass Google Play & App Store review? Find out *before* you upload.
+**Will your app pass Google Play & App Store review? Find out *before* you upload.**
 
 Drop an **APK, AAB or IPA**. Delulu runs the checks **Play Console** and **App Store Connect** run on upload, plus OWASP security checks. You get every issue highlighted with a fix, plus Notion-style docs that walk you **step by step from build to live**.
 
 **100% in your browser — your app is never uploaded anywhere.**
 
-[**🚀 Open Delulu**](https://YOUR_GITHUB_USERNAME.github.io/delulu/) · [Try the sample APK](https://YOUR_GITHUB_USERNAME.github.io/delulu/) · [CLI & GitHub Action](#-cli--ci) · [What it checks](#-what-it-checks)
+[**✈️ Open Delulu**](https://YOUR_GITHUB_USERNAME.github.io/delulu/) · [Try the sample APK](https://YOUR_GITHUB_USERNAME.github.io/delulu/) · [CLI & GitHub Action](#-cli--ci) · [What it checks](#-what-it-checks)
 
 [![CI](https://github.com/YOUR_GITHUB_USERNAME/delulu/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_GITHUB_USERNAME/delulu/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](LICENSE)
@@ -45,10 +45,17 @@ Each rejection costs a day or more. Each leaked API key costs money. Delulu catc
 | 🏗️ **Architecture report** | Framework & engine, languages, SDK inventory, components, deep links, native libs, size breakdown |
 | 🗺️ **Step-by-step to live** | Account → signing → build → testing tracks → review → staged rollout, for both stores, with copy-paste commands |
 | 📝 **Exports** | Docs pack (.zip of Markdown), single Markdown, PDF, raw JSON, plus a README badge |
-| 🎨 **Notion-style workspace** | Sidebar pages, toggles, callouts, to-dos that remember progress, `Ctrl/⌘ K` search, dark mode, smooth animations |
+| 🗂️ **Issue board** | Every problem is a card (AND-2, IOS-7…). Drag it to **Done** when fixed; open it for evidence and the exact fix |
+| 🫠 **Delulu meter** | How far your build is from store-ready. 0% delulu = ship it |
+| 🧭 **Guided tour** | Numbered walkthrough on first visit; replay any time from Help or by pressing `?` |
+| 💾 **Download & reopen** | Nothing is stored. Download a `.delulu.json` report and drop it back in later. No re-upload, progress included |
+| 🎨 **Jira × Notion workspace** | Top search, nested sidebar (Recent, Starred, current build), tabs, toggles, dark mode, smooth animations |
 
 <table><tr>
-<td><img src="docs/screenshots/issues.png" alt="Issues page with highlighted blockers and fixes"></td>
+<td><img src="docs/screenshots/board.png" alt="Issue board with blockers, high-risk and done columns"></td>
+<td><img src="docs/screenshots/issues.png" alt="Issue detail drawer with evidence and fix steps"></td>
+</tr><tr>
+<td><img src="docs/screenshots/tour.png" alt="Guided walkthrough step 1"></td>
 <td><img src="docs/screenshots/keys-dark.png" alt="Keys and secrets playbook in dark mode"></td>
 </tr></table>
 
@@ -130,7 +137,7 @@ The issues list is added to the job summary, and the full docs pack is written t
 
 **Show your score:** after analyzing, choose *Share → Copy README badge*:
 
-![Delulu Google Play](https://img.shields.io/badge/Delulu_Google_Play-96%2F100-brightgreen)
+![Delulu Google Play](https://img.shields.io/badge/%F0%9F%AB%A0_Delulu_Google_Play-0%25_delulu-brightgreen)
 
 ## 🔒 Privacy & security of Delulu itself
 
@@ -167,6 +174,6 @@ npm test   # 18 tests, node:test, no dependencies
 
 <div align="center">
 
-**If Delulu saved you a rejection, give it a ⭐ so other developers find it.**
+**If Delulu saved you from a rejection, drop a ⭐ so other devs find it. it's only delulu until it's approved ✈️**
 
 </div>
