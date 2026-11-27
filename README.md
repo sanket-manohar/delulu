@@ -160,6 +160,20 @@ cli/delulu.mjs ─ same analyzers in Node
 
 Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/ADDING_RULES.md](docs/ADDING_RULES.md).
 
+## ☕ Donations
+
+The site has a **Buy the dev a coffee** popup (preset ₹/$ amounts or any custom amount) and a shimmering **Star on GitHub** button. Set your payment link in `src/config.js`:
+
+```js
+export const DONATE = {
+  url: 'https://razorpay.me/@yourname?amount={amount}', // or Buy Me a Coffee, GitHub Sponsors, a UPI link…
+  defaultCurrency: 'INR',
+  presets: { INR: [49, 99, 199, 499], USD: [2, 5, 10, 25] },
+};
+```
+
+Until `url` is set, the button thanks the user and says donations open soon. The popup opens automatically at most once a week, after a report is downloaded or a minute into a report.
+
 ## 🤝 Contributing
 
 Store rules change every year: Google updates its target API rule each August, and Apple raises the minimum SDK each spring. **Keeping `src/rules/policy.js` current is the most valuable contribution.** New checks, SDK fingerprints and framework guides are welcome too. See [CONTRIBUTING.md](CONTRIBUTING.md).

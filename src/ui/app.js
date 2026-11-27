@@ -10,9 +10,9 @@ import { buildZip } from '../core/zipwriter.js';
 import { sampleApk, sampleIpa } from '../core/samples.js';
 import { renderBlocks, esc, inline } from './render.js';
 import { renderBoard, renderDrawer } from './board.js';
-import { icon } from './icons.js';
+import { icon, cicon } from './icons.js';
 import { Tour } from './tour.js';
-import { REPO_URL, SITE_URL, VERSION } from '../config.js';
+import { REPO_URL, SITE_URL, VERSION, DONATE } from '../config.js';
 import { LAST_REVIEWED } from '../rules/policy.js';
 
 const $ = (s, el = document) => el.querySelector(s);
@@ -77,7 +77,7 @@ const guideId = () => (S.report?.platform === 'ios' ? 'appstore' : 'play');
 // ---------------------------------------------------------------- sidebar
 function navItem(id, label, ic, opts = {}) {
   const active = currentId() === id;
-  return `<a class="nav-item ${active ? 'active' : ''} ${opts.cls || ''}" href="#/${id}" data-nav="${id}" ${opts.attrs || ''}>${typeof ic === 'string' && ic.length > 2 ? icon(ic) : `<span class="ni">${ic}</span>`}<span class="nt">${esc(label)}</span>${opts.badge ? `<span class="nb">${opts.badge}</span>` : ''}</a>`;
+  return `<a class="nav-item ${active ? 'active' : ''} ${opts.cls || ''}" href="#/${id}" data-nav="${id}" ${opts.attrs || ''}>${typeof ic === 'string' && ic.length > 2 ? cicon(ic) : `<span class="ni">${ic}</span>`}<span class="nt">${esc(label)}</span>${opts.badge ? `<span class="nb">${opts.badge}</span>` : ''}</a>`;
 }
 
 function renderSidebar() {
@@ -88,16 +88,16 @@ function renderSidebar() {
   const playbookIds = r ? [guideId(), r.platform === 'ios' ? 'play' : 'appstore', 'keys', 'compliance', 'roadmap'] : ['play', 'appstore', 'keys', 'compliance', 'roadmap'];
   $('#nav').innerHTML = `
     ${navItem('home', 'Home', 'home')}
-    <button type="button" class="nav-item nav-group" data-expand="recent" aria-expanded="${S.expanded.recent}">${icon('clock')}<span class="nt">Recent</span><span class="chev">${icon(S.expanded.recent ? 'chevronDown' : 'chevron')}</span></button>
-    ${S.expanded.recent ? `<div class="nav-sub">${S.session.length ? S.session.map((x, k) => `<button type="button" class="nav-item sub ${x.report === r ? 'current' : ''}" data-session="${k}">${icon(x.report.platform === 'ios' ? 'apple' : 'android')}<span class="nt">${esc(x.report.app.name || x.report.fileName)}</span><span class="nv">${esc(x.report.app.versionName || '')}</span></button>`).join('') : '<div class="nav-empty">Builds you analyze appear here (this tab only)</div>'}</div>` : ''}
-    <button type="button" class="nav-item nav-group" data-expand="starred" aria-expanded="${S.expanded.starred}">${icon('star')}<span class="nt">Starred</span><span class="chev">${icon(S.expanded.starred ? 'chevronDown' : 'chevron')}</span></button>
+    <button type="button" class="nav-item nav-group" data-expand="recent" aria-expanded="${S.expanded.recent}">${cicon('clock')}<span class="nt">Recent</span><span class="chev">${icon(S.expanded.recent ? 'chevronDown' : 'chevron')}</span></button>
+    ${S.expanded.recent ? `<div class="nav-sub">${S.session.length ? S.session.map((x, k) => `<button type="button" class="nav-item sub ${x.report === r ? 'current' : ''}" data-session="${k}">${cicon(x.report.platform === 'ios' ? 'apple' : 'android')}<span class="nt">${esc(x.report.app.name || x.report.fileName)}</span><span class="nv">${esc(x.report.app.versionName || '')}</span></button>`).join('') : '<div class="nav-empty">Builds you analyze appear here (this tab only)</div>'}</div>` : ''}
+    <button type="button" class="nav-item nav-group" data-expand="starred" aria-expanded="${S.expanded.starred}">${cicon('star')}<span class="nt">Starred</span><span class="chev">${icon(S.expanded.starred ? 'chevronDown' : 'chevron')}</span></button>
     ${S.expanded.starred ? `<div class="nav-sub">${starredPages.length ? starredPages.map((p) => navItem(p.id, p.title, PAGE_ICON[p.id] || TAB_ICON[p.id] || 'doc', { cls: 'sub' })).join('') : '<div class="nav-empty">Star a page with ☆ to pin it here</div>'}</div>` : ''}
 
     ${r ? `
     <div class="nav-section">Current build</div>
     <div id="nav-build">
       <button type="button" class="nav-item nav-proj ${isBuildPage(cur) ? 'in' : ''}" data-expand="build" aria-expanded="${S.expanded.build}">
-        <span class="proj-ico ${r.platform}">${icon(r.platform === 'ios' ? 'apple' : 'android')}</span>
+        <span class="proj-ico ${r.platform}">${cicon(r.platform === 'ios' ? 'apple' : 'android')}</span>
         <span class="nt"><span class="proj-name">${esc(r.app.name || r.app.id || r.fileName)}</span><span class="proj-sub">${r.platform === 'ios' ? 'iOS' : 'Android'} · ${esc(r.framework.name)}</span></span>
         <span class="chev">${icon(S.expanded.build ? 'chevronDown' : 'chevron')}</span>
       </button>
@@ -122,12 +122,12 @@ function pageHeader(page) {
     <div class="page-head" id="page-head">
       <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Home</a><span class="sep">/</span><span>Builds</span><span class="sep">/</span><a href="#/overview">${esc(r.app.name || r.fileName)}</a></nav>
       <div class="title-row">
-        <span class="proj-ico lg ${r.platform}">${icon(r.platform === 'ios' ? 'apple' : 'android')}</span>
+        <span class="proj-ico lg ${r.platform}">${cicon(r.platform === 'ios' ? 'apple' : 'android')}</span>
         <h1 class="page-title">${esc(r.app.name || r.app.id || r.fileName)}</h1>
         ${star}
         <span class="title-meta"><span class="pill ${r.summary.ready ? 'green' : 'red'}">${r.summary.ready ? 'Ready' : 'Not ready'}</span><span class="pill gray">🫠 ${r.summary.delulu}% delulu</span><span class="pill gray">${esc(r.format.toUpperCase())} · ${esc(r.app.versionName)}</span></span>
       </div>
-      <nav class="tabs" id="tabs" aria-label="Report views">${BUILD_TABS.map((id) => `<a class="tab ${id === page.id ? 'active' : ''}" href="#/${id}" ${id === page.id ? 'aria-current="page"' : ''}>${icon(TAB_ICON[id])}${TAB_LABEL[id]}</a>`).join('')}</nav>
+      <nav class="tabs" id="tabs" aria-label="Report views">${BUILD_TABS.map((id) => `<a class="tab ${id === page.id ? 'active' : ''}" href="#/${id}" ${id === page.id ? 'aria-current="page"' : ''}>${cicon(TAB_ICON[id])}${TAB_LABEL[id]}</a>`).join('')}</nav>
     </div>`;
   }
   return `
@@ -222,17 +222,17 @@ function renderHome() {
 
     <div class="drop" id="drop" tabindex="0" role="button" aria-label="Choose an APK, AAB or IPA file to analyze">
       <div class="drop-inner">
-        <div class="drop-icon" aria-hidden="true">${icon('upload')}</div>
+        <div class="drop-icon" aria-hidden="true">${cicon('upload')}</div>
         <div class="drop-title">Drop your build here or <u>browse</u></div>
         <div class="drop-sub">${SUPPORTED} · Flutter · React Native · Expo · Kotlin · Swift · Unity · MAUI · Capacitor</div>
-        <div class="drop-privacy">${icon('lock')} 100% in your browser — nothing is uploaded or stored</div>
+        <div class="drop-privacy">${cicon('lock')} 100% in your browser — nothing is uploaded or stored</div>
       </div>
     </div>
     <div class="sample-row" id="sample-row">
       <span class="muted">No build handy?</span>
-      <button class="btn" type="button" data-action="sample-apk">${icon('android')} Try a sample APK</button>
-      <button class="btn" type="button" data-action="sample-ipa">${icon('apple')} Try a sample IPA</button>
-      <button class="btn" type="button" data-action="open-report">${icon('doc')} Open a saved report</button>
+      <button class="btn" type="button" data-action="sample-apk">${cicon('android')} Try a sample APK</button>
+      <button class="btn" type="button" data-action="sample-ipa">${cicon('apple')} Try a sample IPA</button>
+      <button class="btn" type="button" data-action="open-report">${cicon('doc')} Open a saved report</button>
       ${r ? `<a class="btn primary" href="#/overview">Back to ${esc(r.app.name || 'report')} →</a>` : ''}
     </div>
 
@@ -245,12 +245,12 @@ function renderHome() {
         ['layers', 'Architecture', 'Framework & engine, SDK inventory, components, deep links, size breakdown'],
         ['key', 'Keys & secrets', 'Where every key belongs — and where it must never be — for your framework'],
         ['map', 'Step-by-step to live', 'Account → build → testing → review → rollout, with copy-paste commands'],
-      ].map(([i, t, d]) => `<div class="card"><div class="card-i">${icon(i)}</div><div class="card-t">${t}</div><div class="card-d">${d}</div></div>`).join('')}
+      ].map(([i, t, d]) => `<div class="card"><div class="card-i">${cicon(i)}</div><div class="card-t">${t}</div><div class="card-d">${d}</div></div>`).join('')}
     </div>
 
     <h2 class="b-h2">Playbooks — no upload needed</h2>
     <div class="link-list">
-      ${S.pages.filter((p) => !BUILD_TABS.includes(p.id) || !S.report).filter((p) => !BUILD_TABS.includes(p.id)).map((p) => `<a class="link-row" href="#/${p.id}">${icon(PAGE_ICON[p.id] || 'doc')}<span>${esc(p.title)}</span><span class="muted">${esc(p.subtitle || '')}</span></a>`).join('')}
+      ${S.pages.filter((p) => !BUILD_TABS.includes(p.id) || !S.report).filter((p) => !BUILD_TABS.includes(p.id)).map((p) => `<a class="link-row" href="#/${p.id}">${cicon(PAGE_ICON[p.id] || 'doc')}<span>${esc(p.title)}</span><span class="muted">${esc(p.subtitle || '')}</span></a>`).join('')}
     </div>
 
     <div class="b-callout tone-gray"><span class="b-callout-icon">📅</span><div>Rules last reviewed <strong>${LAST_REVIEWED}</strong>. Open source — <a href="${esc(REPO_URL)}" target="_blank" rel="noopener noreferrer">star or contribute on GitHub</a>. New here? <a href="#" data-action="tour">Take the 1-minute tour</a>.</div></div>`;
@@ -310,6 +310,7 @@ async function runAnalysis(file) {
     location.hash = '#/overview';
     toast(report.summary.ready ? `✨ ${report.summary.delulu}% delulu — ${report.summary.vibe}` : `🫠 ${report.summary.delulu}% delulu — ${report.summary.counts.blocker} blocker(s) found. Download the report to keep it`, 5000);
     if (!prefs.get('tour:report', false)) setTimeout(() => startTour('report'), 900);
+    maybeAutoCoffee(60000);
   } catch (e) {
     modal.classList.remove('show');
     modal.hidden = true;
@@ -361,6 +362,7 @@ function downloadReport() {
   S.dirty = false;
   updateSaveState();
   toast('💾 Report downloaded — drop this file on Delulu any time to reopen it', 5000);
+  maybeAutoCoffee(2500);
 }
 
 function exportZip() {
@@ -445,6 +447,51 @@ function toast(msg, ms = 3200) {
   toastTimer = setTimeout(() => t.classList.remove('show'), ms);
 }
 
+// ---------------------------------------------------------------- buy me a coffee
+const COFFEE = { currency: prefs.get('coffeeCur', DONATE.defaultCurrency), amount: null };
+const sym = (c) => (c === 'INR' ? '₹' : '$');
+function renderCoffee() {
+  const cur = COFFEE.currency;
+  const presets = DONATE.presets[cur] || [];
+  if (COFFEE.amount == null) COFFEE.amount = presets[1] ?? presets[0] ?? 0;
+  const emo = ['☕', '☕☕', '🍰', '🚀'];
+  $('#coffee-presets').innerHTML = presets.map((a, i) => `<button type="button" class="amt ${Number(COFFEE.amount) === a ? 'active' : ''}" data-amount="${a}"><span class="amt-e">${emo[i] || '💛'}</span><span>${sym(cur)}${a}</span></button>`).join('');
+  $$('[data-cur]').forEach((b) => b.classList.toggle('active', b.dataset.cur === cur));
+  $('#coffee-sym').textContent = sym(cur);
+  const inp = $('#coffee-custom');
+  if (document.activeElement !== inp) inp.value = presets.includes(Number(COFFEE.amount)) ? '' : (COFFEE.amount || '');
+  const ok = Number(COFFEE.amount) > 0;
+  $('#coffee-go').disabled = !ok;
+  $('#coffee-go span').textContent = ok ? `Support with ${sym(cur)}${Number(COFFEE.amount)}` : 'Enter an amount';
+  $('#coffee-note').textContent = DONATE.url ? 'You will be taken to a secure payment page.' : 'Payment link coming soon — thank you for the love 💛';
+}
+function openCoffee(source = 'manual') {
+  if (document.body.classList.contains('touring') || !$('#progress').hidden) return;
+  const m = $('#coffee');
+  COFFEE.amount = null;
+  renderCoffee();
+  m.hidden = false;
+  requestAnimationFrame(() => m.classList.add('show'));
+  prefs.set('coffeeShownAt', Date.now());
+  setTimeout(() => $('#coffee-go').focus(), 50);
+  m.dataset.source = source;
+}
+function closeCoffee() { const m = $('#coffee'); m.classList.remove('show'); setTimeout(() => { m.hidden = true; }, 180); }
+function maybeAutoCoffee(delay) {
+  const last = prefs.get('coffeeShownAt', 0);
+  if (Date.now() - last < 7 * 864e5) return; // at most once a week
+  setTimeout(() => { if ($('#coffee').hidden && $('#drawer').hidden) openCoffee('auto'); }, delay);
+}
+function donate() {
+  const amt = Number(COFFEE.amount);
+  if (!(amt > 0)) return;
+  if (!DONATE.url) { closeCoffee(); toast('💛 Thank you! Donations open very soon — the link is not set up yet.', 4500); return; }
+  const url = DONATE.url.replace('{amount}', encodeURIComponent(amt)).replace('{currency}', encodeURIComponent(COFFEE.currency));
+  window.open(url, '_blank', 'noopener');
+  closeCoffee();
+  toast('☕ Thank you for supporting Delulu!');
+}
+
 // ---------------------------------------------------------------- tour
 const tour = new Tour({
   navigate: (id) => new Promise((res) => {
@@ -464,11 +511,13 @@ function startTour(name) {
 
 // ---------------------------------------------------------------- events
 document.addEventListener('click', (e) => {
-  const t = e.target.closest('[data-action],[data-copy],[data-tabs],[data-apptype],[data-fw],[data-nav],[data-expand],[data-session],[data-star],[data-issue],[data-toggle-fixed],[data-bfilter],[data-groupby],[data-open-issue],.pal-item');
+  const t = e.target.closest('[data-amount],[data-cur],[data-action],[data-copy],[data-tabs],[data-apptype],[data-fw],[data-nav],[data-expand],[data-session],[data-star],[data-issue],[data-toggle-fixed],[data-bfilter],[data-groupby],[data-open-issue],.pal-item');
   if (!t) {
     if (!e.target.closest('.menu')) $$('.menu.open').forEach((m) => m.classList.remove('open'));
     return;
   }
+  if (t.dataset.amount) { COFFEE.amount = Number(t.dataset.amount); renderCoffee(); return; }
+  if (t.dataset.cur) { COFFEE.currency = t.dataset.cur; prefs.set('coffeeCur', COFFEE.currency); COFFEE.amount = null; renderCoffee(); return; }
   if (t.dataset.openIssue) { closePalette(); location.hash = '#/board'; setTimeout(() => openDrawer(t.dataset.openIssue), 150); e.preventDefault(); return; }
   if (t.matches('.pal-item')) { closePalette(); return; }
   if (t.dataset.nav) { if (matchMedia('(max-width: 860px)').matches) document.body.classList.remove('nav-open'); return; }
@@ -517,6 +566,9 @@ document.addEventListener('click', (e) => {
   else if (a === 'print') printAll();
   else if (a === 'tour') { e.preventDefault(); startTour(S.report && currentId() !== 'home' ? 'report' : 'home'); }
   else if (a === 'tour-home') startTour('home');
+  else if (a === 'coffee') openCoffee();
+  else if (a === 'coffee-close') closeCoffee();
+  else if (a === 'coffee-go') donate();
   else if (a === 'close-drawer') closeDrawer();
   else if (a === 'copy-issue') copy(issueMarkdown(t.dataset.issueId), 'Issue copied as Markdown');
   else if (a === 'toggle-all') { S.openAll = !S.openAll; route(); }
@@ -547,6 +599,7 @@ document.addEventListener('change', (e) => {
 });
 
 document.addEventListener('input', (e) => {
+  if (e.target.id === 'coffee-custom') { const v = Math.max(0, Math.min(1000000, Number(e.target.value) || 0)); COFFEE.amount = v; renderCoffee(); return; }
   if (e.target.id === 'board-q') {
     S.board.q = e.target.value;
     const pos = e.target.selectionStart;
@@ -579,6 +632,7 @@ document.addEventListener('drop', (e) => {
 document.addEventListener('keydown', (e) => {
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openPalette(); }
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's' && S.report) { e.preventDefault(); downloadReport(); }
+  if (e.key === 'Escape' && !$('#coffee').hidden) { closeCoffee(); return; }
   if (e.key === 'Escape') { closePalette(); closeDrawer(); $$('.menu.open').forEach((m) => m.classList.remove('open')); document.body.classList.remove('nav-open'); }
   if (e.key === '?' && !/input|textarea/i.test(document.activeElement?.tagName || '') && !document.body.classList.contains('touring')) startTour(S.report && currentId() !== 'home' ? 'report' : 'home');
   if (!$('#palette').hidden && (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter')) {
@@ -594,6 +648,7 @@ document.addEventListener('keydown', (e) => {
 $('#palette-input').addEventListener('input', (e) => renderPalette(e.target.value));
 $('#palette').addEventListener('click', (e) => { if (e.target.id === 'palette') closePalette(); });
 $('#drawer-veil').addEventListener('click', () => closeDrawer());
+$('#coffee').addEventListener('click', (e) => { if (e.target.id === 'coffee') closeCoffee(); });
 
 // Drop files anywhere (build or saved report).
 let dragDepth = 0;
@@ -623,6 +678,7 @@ applyTheme(prefs.get('theme', matchMedia('(prefers-color-scheme: dark)').matches
 $('#version').textContent = `v${VERSION}`;
 $$('[data-repo]').forEach((a) => { a.href = REPO_URL; });
 $$('[data-icon]').forEach((el) => { el.insertAdjacentHTML('afterbegin', icon(el.dataset.icon)); });
+$$('[data-cicon]').forEach((el) => { el.insertAdjacentHTML('afterbegin', cicon(el.dataset.cicon)); });
 rebuild();
 route();
 if (!prefs.get('tour:home', false) && currentId() === 'home') setTimeout(() => startTour('home'), 700);

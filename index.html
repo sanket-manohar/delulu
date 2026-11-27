@@ -31,6 +31,7 @@
     <button class="gsearch" id="global-search" type="button" data-action="search" data-icon="search"><span>Search pages, checks, issues…</span><kbd>Ctrl K</kbd></button>
     <button class="btn primary new-btn" id="btn-new" type="button" data-action="new" data-icon="plus"><span class="hide-sm">New analysis</span></button>
     <div class="gtop-right">
+      <a class="star-repo shimmer" data-repo href="#" target="_blank" rel="noopener noreferrer" data-cicon="star" title="Star Delulu on GitHub"><span class="hide-sm">Star on GitHub</span></a>
       <button class="btn dl-btn" id="btn-download" type="button" data-action="download-report" data-icon="download" hidden><span class="hide-sm">Download report</span></button>
       <div class="menu" id="btn-export">
         <button class="icon-btn" type="button" data-action="menu" data-icon="share" aria-haspopup="true" aria-label="Share and export" title="Share & export"></button>
@@ -51,6 +52,7 @@
           <button type="button" role="menuitem" data-action="tour">🧭 Take the tour <kbd>?</kbd></button>
           <button type="button" role="menuitem" data-action="search">🔍 Search <kbd>Ctrl K</kbd></button>
           <button type="button" role="menuitem" data-action="download-report">💾 Download report <kbd>Ctrl S</kbd></button>
+          <button type="button" role="menuitem" data-action="coffee">☕ Buy the dev a coffee</button>
           <a role="menuitem" data-repo href="#" target="_blank" rel="noopener noreferrer">⭐ GitHub &amp; docs</a>
         </div>
       </div>
@@ -62,7 +64,9 @@
     <aside class="sidebar" id="sidebar" aria-label="Navigation">
       <nav id="nav"></nav>
       <div class="side-foot">
-        <button class="side-help" type="button" data-action="tour" data-icon="compass"><span>Get help with navigation</span></button>
+        <a class="star-side shimmer" data-repo href="#" target="_blank" rel="noopener noreferrer" data-cicon="star"><span>Star the repo on GitHub</span></a>
+        <button class="coffee-btn" type="button" data-action="coffee" data-cicon="coffee"><span>Buy the dev a coffee</span></button>
+        <button class="side-help" type="button" data-action="tour" data-cicon="compass"><span>Get help with navigation</span></button>
         <span class="muted small">🔒 Your files never leave this device.</span>
       </div>
     </aside>
@@ -81,6 +85,21 @@
       <div class="muted small" id="progress-file"></div>
       <div class="pbar"><div class="pbar-fill" id="progress-bar"></div></div>
       <div class="muted small" id="progress-msg" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div class="overlay" id="coffee" hidden>
+    <div class="modal coffee-modal" role="dialog" aria-modal="true" aria-labelledby="coffee-title">
+      <button class="icon-btn coffee-x" type="button" data-action="coffee-close" data-icon="x" aria-label="Close"></button>
+      <div class="coffee-art" data-cicon="coffee" aria-hidden="true"></div>
+      <h2 class="coffee-title" id="coffee-title">Buy the dev a coffee</h2>
+      <p class="coffee-text">Delulu is free, open source and runs 100% in your browser. If it saved you from a rejection, fuel the next update — <strong>any amount</strong> helps.</p>
+      <div class="seg cur" role="group" aria-label="Currency"><button type="button" data-cur="INR">₹ INR</button><button type="button" data-cur="USD">$ USD</button></div>
+      <div class="amts" id="coffee-presets"></div>
+      <label class="custom-amt"><span id="coffee-sym">₹</span><input id="coffee-custom" type="number" inputmode="decimal" min="1" step="1" placeholder="Any amount"></label>
+      <button class="btn primary shimmer coffee-go" id="coffee-go" type="button" data-action="coffee-go"><span>Support</span></button>
+      <button class="btn-ghost sm" type="button" data-action="coffee-close">Maybe later</button>
+      <div class="muted small" id="coffee-note"></div>
     </div>
   </div>
 

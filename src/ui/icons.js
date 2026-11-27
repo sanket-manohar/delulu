@@ -58,3 +58,37 @@ export function priority(sev) {
   };
   return `<svg class="prio prio-${sev}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="${sev} priority">${map[sev] || ''}</svg>`;
 }
+
+// ---------------------------------------------------------------- colorful "product" icons
+// Original filled icons in the Delulu palette (blue, red, yellow, green), Google-product style.
+const B = '#3B82F6', DB = '#1D4ED8', R = '#EF4444', Y = '#FBBF24', O = '#F59E0B', G = '#22C55E', DG = '#15803D', W = '#fff';
+const C = {
+  home: `<path d="M2.8 11.2 12 3.3l9.2 7.9z" fill="${R}"/><path d="M5.2 10.6h13.6v9.1a1.3 1.3 0 0 1-1.3 1.3H6.5a1.3 1.3 0 0 1-1.3-1.3z" fill="${B}"/><rect x="10" y="14" width="4" height="7" rx="1" fill="${Y}"/>`,
+  clock: `<circle cx="12" cy="12" r="9.3" fill="${B}"/><path d="M12 12V2.7A9.3 9.3 0 0 1 21.3 12z" fill="${DB}"/><path d="M12 6.8V12l3.6 2.3" stroke="${W}" stroke-width="2.2" stroke-linecap="round" fill="none"/><circle cx="12" cy="12" r="1.5" fill="${Y}"/>`,
+  star: `<path d="m12 2.6 2.9 6 6.5.9-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9z" fill="${Y}"/><path d="M12 2.6v14.9l5.8 3.1-1.1-6.5 4.7-4.6-6.5-.9z" fill="${O}"/>`,
+  board: `<rect x="2.8" y="3.5" width="5.4" height="15" rx="1.6" fill="${B}"/><rect x="9.3" y="3.5" width="5.4" height="10.5" rx="1.6" fill="${Y}"/><rect x="15.8" y="3.5" width="5.4" height="17" rx="1.6" fill="${G}"/>`,
+  summary: `<circle cx="12" cy="12" r="6.6" fill="none" stroke="${B}" stroke-width="5" stroke-dasharray="15 41.5" transform="rotate(-90 12 12)"/><circle cx="12" cy="12" r="6.6" fill="none" stroke="${R}" stroke-width="5" stroke-dasharray="0 15 9 32.5" transform="rotate(-90 12 12)"/><circle cx="12" cy="12" r="6.6" fill="none" stroke="${Y}" stroke-width="5" stroke-dasharray="0 24 9 23.5" transform="rotate(-90 12 12)"/><circle cx="12" cy="12" r="6.6" fill="none" stroke="${G}" stroke-width="5" stroke-dasharray="0 33 8.5 15" transform="rotate(-90 12 12)"/>`,
+  list: `<circle cx="5" cy="6" r="2.2" fill="${R}"/><circle cx="5" cy="12" r="2.2" fill="${Y}"/><circle cx="5" cy="18" r="2.2" fill="${G}"/><rect x="9" y="4.8" width="12" height="2.5" rx="1.25" fill="${B}"/><rect x="9" y="10.8" width="10" height="2.5" rx="1.25" fill="${B}"/><rect x="9" y="16.8" width="11" height="2.5" rx="1.25" fill="${B}"/>`,
+  checks: `<rect x="3" y="3" width="18" height="18" rx="5" fill="${G}"/><path d="M3 12.5V8a5 5 0 0 1 5-5h4.5z" fill="${DG}" opacity=".35"/><path d="m7.5 12.3 3 3 6-6.5" stroke="${W}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
+  shield: `<path d="M12 2.5 20 5.6v6c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10v-6z" fill="${B}"/><path d="M12 2.5v19.1c4.6-1.3 8-5 8-10v-6z" fill="${DB}"/><path d="m8.6 12 2.4 2.4 4.4-4.6" stroke="${W}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
+  layers: `<path d="m12 13.6 9 -4.3-9-4.3-9 4.3z" fill="${B}" transform="translate(0 7)" opacity=".95"/><path d="m12 13.6 9 -4.3-9-4.3-9 4.3z" fill="${G}" transform="translate(0 3.5)"/><path d="m12 13.6 9 -4.3-9-4.3-9 4.3z" fill="${Y}"/>`,
+  eye: `<path d="M1.8 12C4 7.6 7.7 5 12 5s8 2.6 10.2 7c-2.2 4.4-5.9 7-10.2 7S4 16.4 1.8 12z" fill="${B}"/><circle cx="12" cy="12" r="4.4" fill="${W}"/><circle cx="12" cy="12" r="2.4" fill="${DB}"/><circle cx="13.1" cy="10.9" r=".9" fill="${Y}"/>`,
+  android: `<path d="M3.5 18.5a8.5 8.5 0 0 1 17 0z" fill="${G}"/><path d="m6.6 7.6 1.8 2.9M17.4 7.6l-1.8 2.9" stroke="${G}" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="15" r="1.2" fill="${W}"/><circle cx="15" cy="15" r="1.2" fill="${W}"/>`,
+  apple: `<path d="M12 7.6c-1.3-1.1-3-1.6-4.6-1.1C4.6 7.4 3.6 10.6 4.4 14c.8 3.6 3.2 7 5.6 6.5.8-.2 1.3-.5 2-.5s1.2.3 2 .5c2.4.5 4.8-2.9 5.6-6.5.8-3.4-.2-6.6-3-7.5-1.6-.5-3.3 0-4.6 1.1z" fill="${R}"/><path d="M12 7.6C12 5.4 13.3 3.5 16 2.8c.1 2.6-1.4 4.4-4 4.8z" fill="${G}"/><path d="M7.3 9.6c-.9.8-1.3 2-1.2 3.3" stroke="${W}" stroke-width="1.4" stroke-linecap="round" fill="none" opacity=".7"/>`,
+  key: `<circle cx="8" cy="15" r="5.2" fill="${Y}"/><circle cx="8" cy="15" r="2" fill="${W}"/><path d="m11.4 11.6 8.4-8.4 1.8 1.8-1.6 1.6 1.4 1.4-1.8 1.8-1.4-1.4-1.2 1.2 1.2 1.2-1.8 1.8-1.2-1.2-2 2z" fill="${O}"/>`,
+  scale: `<rect x="11" y="4" width="2" height="15" rx="1" fill="${DB}"/><rect x="6.5" y="18.5" width="11" height="2.5" rx="1.25" fill="${DB}"/><rect x="3.5" y="5.5" width="17" height="2" rx="1" fill="${B}"/><path d="M2.3 13.5h7.4a3.7 3.7 0 0 1-7.4 0z" fill="${R}"/><path d="M14.3 13.5h7.4a3.7 3.7 0 0 1-7.4 0z" fill="${G}"/><path d="m6 7.5-3 6m3-6 3 6m9-6-3 6m3-6 3 6" stroke="${B}" stroke-width="1.2"/>`,
+  map: `<path d="M2.5 5.8 8.5 3.5v14.7l-6 2.3z" fill="${G}"/><path d="m8.5 3.5 7 2.3v14.7l-7-2.3z" fill="${Y}"/><path d="m15.5 5.8 6-2.3v14.7l-6 2.3z" fill="${B}"/><circle cx="12" cy="10" r="2" fill="${R}"/>`,
+  book: `<path d="M5 3.5h12a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2z" fill="${R}"/><path d="M5 20.5a2 2 0 0 1 2-2h12v2.5H7a2 2 0 0 1-2-.5z" fill="#FCA5A5"/><path d="M13 3.5h3.5v7l-1.75-1.4-1.75 1.4z" fill="${Y}"/>`,
+  compass: `<circle cx="12" cy="12" r="9.3" fill="${B}"/><path d="M16.2 7.8 13 13 11 11z" fill="${R}"/><path d="M7.8 16.2 11 11 13 13z" fill="${W}"/><circle cx="12" cy="12" r="1.2" fill="${Y}"/>`,
+  upload: `<path d="M7 19a5 5 0 0 1-.6-10A6.5 6.5 0 0 1 19 9.6 4.8 4.8 0 0 1 18 19z" fill="${B}"/><path d="M12 16.5v-6.5m-3 2.8 3-3 3 3" stroke="${W}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
+  lock: `<path d="M7.5 10.5V8a4.5 4.5 0 0 1 9 0v2.5" stroke="${DB}" stroke-width="2.4" fill="none"/><rect x="4.5" y="10" width="15" height="11" rx="3" fill="${Y}"/><circle cx="12" cy="15.5" r="1.8" fill="${O}"/>`,
+  doc: `<path d="M6 2.5h8.5l4.5 4.5v13a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 20V4a1.5 1.5 0 0 1 1-1.5z" fill="${B}"/><path d="M14.5 2.5V7H19z" fill="${DB}"/><rect x="8" y="11" width="8" height="1.8" rx=".9" fill="${W}"/><rect x="8" y="14.5" width="6" height="1.8" rx=".9" fill="${W}"/>`,
+  coffee: `<path d="M8 2.8c-1 1.2 1 2.2 0 3.6M12 2.3c-1 1.3 1 2.4 0 3.9M16 2.8c-1 1.2 1 2.2 0 3.6" stroke="${R}" stroke-width="1.5" stroke-linecap="round" fill="none" class="steam"/><path d="M17.5 10.5h1a3 3 0 0 1 0 6h-1.6" stroke="${O}" stroke-width="2.2" fill="none"/><path d="M4 8.5h14v6.5a5.5 5.5 0 0 1-5.5 5.5h-3A5.5 5.5 0 0 1 4 15z" fill="${Y}"/><ellipse cx="11" cy="8.6" rx="7" ry="1.4" fill="#92400E"/><rect x="2.5" y="20.3" width="17" height="1.8" rx=".9" fill="${B}"/>`,
+  heart: `<path d="M12 20.5S3 15 3 9a4.5 4.5 0 0 1 9-1.2A4.5 4.5 0 0 1 21 9c0 6-9 11.5-9 11.5z" fill="${R}"/><path d="M12 20.5V7.8A4.5 4.5 0 0 1 21 9c0 6-9 11.5-9 11.5z" fill="#DC2626"/>`,
+};
+
+/** Colorful product icon; falls back to the line icon if no colored version exists. */
+export function cicon(name, cls = '') {
+  if (!C[name]) return icon(name, cls);
+  return `<svg class="cico ${cls}" viewBox="0 0 24 24" aria-hidden="true">${C[name]}</svg>`;
+}
